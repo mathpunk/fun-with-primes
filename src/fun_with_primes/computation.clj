@@ -15,23 +15,12 @@
 
 (defn first-primes [n]
   (loop [primes []
-         candidates (range 2 n)]
-    (if (empty? candidates)
+         candidates (rest (rest (range)))] ;; Two to infinity
+    (if (= n (count primes))
       primes
       (let [next-prime (first candidates)
             next-candidates (sieve next-prime candidates)]
         (recur (conj primes next-prime)
-               next-candidates)))))
-
-;; This is actually my first prime finder, but it doesn't appear transients help much with this approach to the problem.
-(defn first-primes-with-transients [n]
-  (loop [primes (transient [])
-         candidates (range 2 n)]
-    (if (empty? candidates)
-      (persistent! primes)
-      (let [next-prime (first candidates)
-            next-candidates (sieve next-prime candidates)]
-        (recur (conj! primes next-prime)
                next-candidates)))))
 
 ;; The data for our multiplication table.
