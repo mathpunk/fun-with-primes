@@ -1,4 +1,4 @@
-(ns fun-with-primes.core-test
+(ns fun-with-primes.computation-test
   (:require [clojure.test :refer :all]
             [clojure.algo.generic.math-functions :refer [approx= log]]
             [fun-with-primes.core :refer :all]))
@@ -42,4 +42,6 @@
   (testing "Primes less than 10^3."
     (is (= 168 (count (first-primes 1000)))))
   (testing "Primes less than 10^4."
-    (is (= 1229 (count (first-primes 10000)))))) 
+    (is (= 1229 (count (first-primes 10000))))))
+
+
