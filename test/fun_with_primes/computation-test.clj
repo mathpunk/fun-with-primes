@@ -1,7 +1,7 @@
 (ns fun-with-primes.computation-test
   (:require [clojure.test :refer :all]
             [clojure.algo.generic.math-functions :refer [approx= log]]
-            [fun-with-primes.core :refer :all]))
+            [fun-with-primes.computation :refer :all]))
 
 ;; Let pi(x) equal the number of primes less than x. The prime number theorem states that the limit as x approaches infinity of pi(x) divided by x / log(x) is one. I'll go by this table here
 ;;
@@ -13,7 +13,7 @@
   (/ x (log x)))
 
 (defn relative-error [x]
-  (let [primes-counted (count (first-primes x))
+  (let [primes-counted (count (primes-less-than x))
         primes-approximated (approximate-number-of-primes x)]
     (/ primes-counted primes-approximated)))
 
@@ -31,17 +31,3 @@
   ;; Stack overflowed. Let's try,
   (testing "Primes less than 1.5*10^4."
     (is (approx= (relative-error 15000) 1 0.130))))
-
-;; After writing these tests I realized, oh hey, the table tells us exactly how many primes there are for several powers of ten.
-
-(deftest expected-prime-counts
-  (testing "Primes less than 10."
-    (is (= 4 (count (first-primes 10)))))
-  (testing "Primes less than 10^2."
-    (is (= 25 (count (first-primes 100)))))
-  (testing "Primes less than 10^3."
-    (is (= 168 (count (first-primes 1000)))))
-  (testing "Primes less than 10^4."
-    (is (= 1229 (count (first-primes 10000))))))
-
-
